@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Sprint2</title>
+</head>
+<body>
+    <div class="row" layout:fragment="main" th:each="request : ${requests}">
+        <div class="col-sm-6 mt-3">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <p style="color: red" th:text="${request.isHandled()} ? '' : '(НОВАЯ)'"></p>
+                        <p th:text="'Заявка от ' + ${request.getUserName()}"></p>
+                        <p th:text="'Курс: ' + ${request.getCourseName()}"></p>
+                        <p th:text="${request.getCommentary()}"></p>
+                        <div class="d-flex">
+                            <p th:text="${request.getPhone()}"></p>
+                            <a class="decoration-none ms-3" th:href="@{ '/details/' + ${request.getId()} }">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

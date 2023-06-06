@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Details</title>
+</head>
+<body>
+    <div layout:fragment="handled">
+        <div class="row">
+            <h1 style="text-align: center" th:class="${request.isHandled()} ? 'text-success' : 'text-danger'" th:text="${request.isHandled()} ? 'ОБРАБОТАННАЯ ЗАЯВКА' : '*** НОВАЯ НЕОБРАБОТАННАЯ ЗАЯВКА ***'"></h1>
+        </div>
+    </div>
+
+    <div class="container" layout:fragment="main">
+        <form th:action="@{'/handle-request'}" method="post">
+            <div class="input-group mb-3">
+                <span class="input-group-text" >ФИО</span>
+                <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" th:value="${request.getUserName()}" readonly name="userName">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" >Курс</span>
+                <select name="courseName" class="form-select">
+                    <option th:text="${request.getCourseName()}" selected></option>
+                </select>
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" >Телефон</span>
+                <input type="tel" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" th:value="${request.getPhone()}" readonly name="phone">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" >Комментарий</span>
+                <textarea class="form-control" th:text="${request.getCommentary()}" readonly name="commentary"></textarea>
+            </div>
+
+            <div class="col-6" style="display:flex">
+                    <input type="hidden" name="id" th:value="${request.getId()}">
+                    <button class="btn btn-success btn-sm" th:style="${request.isHandled() ? 'display:none' : 'display:block'}">Обработать заявку</button>
+                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal">Удалить заявку</button>
+            </div>
+
+        </form>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Подтвердите удаление</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Вы уверены?
+                    </div>
+                    <div class="modal-footer">
+                        <form th:action="@{'/delete-request'}" method="post">
+                            <input type="hidden" name="id" th:value="${request.getId()}">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Нет</button>
+                            <button class="btn btn-danger" th:href="@{'/delete-request'}">Да</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

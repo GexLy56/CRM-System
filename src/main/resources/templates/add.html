@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout/main.html">
+<head>
+    <meta charset="UTF-8">
+    <title>Add</title>
+</head>
+  <body>
+  <div class="container mb-3" layout:fragment="main">
+    <form th:action="@{'/add-request'}" method="post">
+      <div class="input-group mb-3">
+        <span class="input-group-text" >ФИО</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="userName">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" >Курс</span>
+        <select name="courseName" class="form-select">
+          <option value="Java Standart Edition">Java Standart Edition</option>
+          <option value="Java Enterprise Edition">Java Enterprise edition</option>
+          <option value="Spring">Spring</option>
+          <option value="Spring Pro">Spring Pro</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" >Телефон</span>
+        <input type="tel" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" name="phone">
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" >Комментарий</span>
+        <textarea class="form-control" name="commentary"></textarea>
+      </div>
+      <button class="btn btn-success">Добавить заявку</button>
+    </form>
+  </div>
+</body>
+</html>
